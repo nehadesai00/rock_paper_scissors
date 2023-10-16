@@ -1,21 +1,65 @@
-function getPlayerSelection() {
-    return prompt("Make a choice: Rock, Paper, or Scissors");
-}
+let rock = document.querySelector("#rock");
+let paper = document.querySelector("#paper");
+let scissors = document.querySelector("#scissors");
+
+let recent_result = document.querySelector("#recent-result");
+let scorecard = document.querySelector("#scorecard");
+let overall = document.querySelector("#overall");
+let play_again = document.querySelector("#play-again");
+
+let playerWins = 0;
+let computerWins = 0;
+
+
+rock.addEventListener('click', () => {
+    
+    if (playerWins < 5 && computerWins < 5) {
+        recent_result.textContent = oneRound("Rock", getComputerChoice());
+        scorecard.textContent = `Score --> You: ${playerWins}\u00A0\u00A0\u00A0\u00A0\u00A0Computer: ${computerWins}`;
+    }
+    
+    if (playerWins === 5 || computerWins === 5) {
+        overall.textContent = whoWonMore();
+        play_again.textContent = "Reload the page to play again!";
+    }
+});
+
+paper.addEventListener('click', () => {
+    
+    if (playerWins < 5 && computerWins < 5) {
+        recent_result.textContent = oneRound("Paper", getComputerChoice());
+        scorecard.textContent = `Score --> You: ${playerWins}\u00A0\u00A0\u00A0\u00A0\u00A0Computer: ${computerWins}`;
+    }
+    
+    if (playerWins === 5 || computerWins === 5) {
+        overall.textContent = whoWonMore();
+        play_again.textContent = "Reload the page to play again!";
+    }
+});
+
+scissors.addEventListener('click', () => {
+    
+    if (playerWins < 5 && computerWins < 5) {
+        recent_result.textContent = oneRound("Scissors", getComputerChoice());
+        scorecard.textContent = `Score --> You: ${playerWins}\u00A0\u00A0\u00A0\u00A0\u00A0Computer: ${computerWins}`;
+    }
+    
+    if (playerWins === 5 || computerWins === 5) {
+        overall.textContent = whoWonMore();
+        play_again.textContent = "Reload the page to play again!";
+    }
+});
+
 
 function getComputerChoice() {
     let arr = ["Rock", "Paper", "Scissors"];
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
-let playerWins = 0;
-let computerWins = 0;
-let numberTies = 0;
 
 function oneRound(playerSelection, computerSelection) {
-    playerSelection = playerSelection[0].toUpperCase() + playerSelection.toLowerCase().slice(1);
 
     if (playerSelection === computerSelection) {
-        numberTies += 1;
         return `Draw! You both chose ${playerSelection}`;
     }
 
@@ -60,21 +104,12 @@ function oneRound(playerSelection, computerSelection) {
     }
 }
 
-function whoWonMore() {
-    if (playerWins === computerWins) {
-        return "Tie Overall!";
-    }
-    else if (playerWins > computerWins) {
-        return `You won overall! You won ${playerWins}/5 games and tied ${numberTies} times!`;
-    }
-    else {
-        return `You lost overall! You won ${playerWins}/5 games though and tied ${numberTies} times!`;
-    }
-}
 
-function game() {
-    for (let i = 1; i <= 5; i++) {
-        console.log(oneRound(getPlayerSelection(), getComputerChoice()));
+function whoWonMore() {
+    if (playerWins === 5) {
+        return "You won overall!";
     }
-    console.log(whoWonMore());
+    else if (computerWins === 5) {
+        return "You lost overall!";
+    }
 }
